@@ -1,0 +1,188 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>PruebasPDF</title>
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="author" content="" />
+    <meta name="viewport" content="width=device-width; initial-scale=1.0" />
+    <!-- !CSS -->
+    <link href="Content/jquery.mobile-1.0.1.min.css" rel="stylesheet" type="text/css" />
+    <link href="Content/Site.css" rel="stylesheet" type="text/css" />
+    <script src="Scripts/jquery-1.6.4.min.js" type="text/javascript"></script>
+    <script src="Scripts/jquery.mobile-1.0.1.min.js" type="text/javascript"></script>
+
+    <!-- clases de PhoneGap (cordova) -->
+<!-- iOS  -->
+    <!-- <script src="scripts/cordova.ios.js" type="text/javascript"></script> -->
+<!-- ANDROID -->
+    <script src="Scripts/cordova-2.3.0.js" type="text/javascript"></script> 
+
+    <script src="Scripts/childbrowser.js" type="text/javascript"></script> 
+
+</head>
+<body>
+    <div data-role="page">
+        <div data-role="header" data-theme="d">
+            <h3>
+                pruebas v.Tablet_1 ...
+            </h3>
+            <a href="#" data-icon="home" data-iconpos="notext" data-direction="reverse">Home</a>
+        </div>
+        <div data-role="content">
+            <ul data-role="listview" data-inset="true">
+                <li data-role="list-divider">Navigate To</li>
+                <li><a href="#" onclick="bajaPDF();">bajar FIC</a></li>
+                <li><a href="#" onclick="abrePDF();">abrir FIC</a></li>
+                <li><a href="#" onclick="openWindow();">inAppBrowser</a></li>
+                <li><a href="#" onclick="childB();">ChildBrowser</a></li>
+                <li><a href="#" onclick="childBexternal();">ChildBrowserEXTERNAL</a></li>
+                <li><a href="#" onclick="loadURL();">gapEXEC</a></li>
+                <li><a href="#" onclick="libPDF();">libPDF</a></li>
+                <li><a href="#" onclick="salir();">SALIR</a></li>
+            </ul>
+            <label for="txtINI">bajar de </label><input type="text" id="txtINI" name="txtINI" value = "http://213.27.242.251:8000/AJVILA/Archivos/FOTOS/" />
+            <label for="txtFIN">guardar en </label><input type="text" id="txtFIN" name="txtFIN" value="file:///mnt/sdcard/Download/"/>
+            <iframe id="visorPDF"></iframe>
+            <img id="visorIMG"></img>
+        </div>
+    </div>
+
+     <script type="text/javascript">
+
+         var dispositivo = "";
+
+         window.addEventListener('load', function () {
+             alert('load OK');
+
+             if (isAndroid()) {
+                 alert('Android');
+                 $("script").attr("src", "Scripts/cordova-2.3.0.js").appendTo("head");
+             } else if (isiOS()) {
+                 alert('iOS');
+                 $("script").attr("src", "Scripts/cordova.ios.js").appendTo("head");
+             }
+
+             document.addEventListener("deviceready", onDeviceReady, false);
+         }, false);
+       
+         function onDeviceReady() {
+             try {
+                 alert('device ready OK');
+                 dispositivo = device.platform;
+                 alert('device = ' + dispositivo);
+             }
+             catch (e) {
+                 alert('Error (exception) en device ready : ' + e.message);
+             }
+         }
+
+         function isAndroid() {
+             return navigator.userAgent.indexOf("Android") > 0;
+         }
+
+         function isiOS() {
+             return (navigator.userAgent.indexOf("iPhone") > 0 || navigator.userAgent.indexOf("iPad") > 0 || navigator.userAgent.indexOf("iPod") > 0);
+         }
+
+         function salir() {
+             alert('salir');
+             if (navigator.app && navigator.app.exitApp) {
+                 navigator.app.exitApp();
+             } else if (navigator.device && navigator.device.exitApp) {
+                 navigator.device.exitApp();
+             }
+         }
+
+         function getFilePath() {
+             if (isAndroid()) {
+                 return "file:///mnt/sdcard/Download/";
+                 //return "file:///android_asset/www/res/db/";
+             } else {
+                 return "file:///Documents/";
+                 //return "res//db//";
+             }
+         }
+
+         function bajaPDF() {
+             alert('bajar Fic');
+             var fileTransfer = new FileTransfer();
+             //var uri = encodeURI("http://213.27.242.251:8000/AJVILA/Archivos/FOTOS/F_INC_743_4.PNG");  //Horari.pdf");
+             var uri = encodeURI($('#txtINI').val());  //Horari.pdf");
+             //var filePath = getFilePath();
+             var filePath = $('#txtFIN').val();
+
+            fileTransfer.download(
+                uri,
+                filePath, // + "imagenUno.PNG", //"Horari.pdf",
+                function(entry) {
+                    alert("download complete: \n" + entry.fullPath);
+                },
+                function(error) {
+                    alert("download error source " + error.source + "   download error target " + error.target + "  upload error code" + error.code);
+                }
+            );
+         }
+
+         function abrePDF() {
+
+             var filePath = $('#txtFIN').val();
+             var sExt = filePath.substr(filePath.length - 3).toUpperCase();
+
+             alert('abrir Fic ' + sExt);
+
+             switch (sExt) {
+                 case "PNG" :
+                 case "JPG" :
+                 case "PEG" :
+                 case "GIF" :
+                 case "BMP" :  
+                     $('#visorIMG').attr("src", filePath); 
+                     break;
+
+                 case "PDF":
+                     $('#visorPDF').attr("src", filePath); 
+                     //$('#visorPDF').contents().find('html').html(filePath);
+                     break;
+             }
+
+             navigator.app.loadUrl(filePath);
+         }
+
+         function openWindow() {
+             alert('openWindow Google');
+
+//             var exec = cordova.require('cordova/exec');
+//             exec.setJsToNativeBridgeMode(exec.jsToNativeModes.IFRAME_NAV);
+
+             //inAppBrowser : 
+             var ref = window.open('http://www.google.com', '_system');
+             ref.addEventListener('loadstart', function () { alert('start: ' + event.url); });
+             ref.addEventListener('loadstop', function () { alert('stop: ' + event.url); });
+             ref.addEventListener('exit', function () { alert(event.type); });
+
+             //var ref = window.open(filePath, '_blank', 'location=yes');
+         }
+
+         function childB() {
+             window.plugins.childBrowser.showWebPage('http://www.google.com',{ showLocationBar: true });
+         }
+
+         function childBexternal() {
+             //window.plugins.childBrowser.openExternal('http://www.google.com');
+             ChildBrowser.openExternal('http://www.google.com', false);
+         }
+
+         function loadURL() {
+             //navigator.app.loadUrl('http://www.google.com');
+             gap.exec(null, null, "ChildBrowser", "openExternal", ['http://www.google.com', true]);
+         }
+
+         function libPDF() {
+             $.mobile.changePage("verPdf.html", { transition: "slideup" });
+         }
+
+    </script>
+</body>
+</html>
