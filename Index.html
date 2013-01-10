@@ -40,6 +40,7 @@
                 <li><a href="#" onclick="childBexternal();">ChildBrowserEXTERNAL</a></li>
                 <li><a href="#" onclick="loadURL();">gapEXEC</a></li>
                 <li><a href="#" onclick="libPDF();">libPDF</a></li>
+                <li><a href="#" onclick="libPDF2();">libPDF</a></li>
                 <li><a href="#" onclick="salir();">SALIR</a></li>
             </ul>
             <label for="txtINI">bajar de </label><input type="text" id="txtINI" name="txtINI" value = "http://213.27.242.251:8000/AJVILA/Archivos/FOTOS/" />
@@ -181,6 +182,10 @@
 
          function libPDF() {
              $.mobile.changePage("verPdf.html", { transition: "slideup" });
+         }
+
+         function libPDF2() {
+             $.mobile.changePage("verPdf2.html", { transition: "slidedown" });
          }
 
     </script>
