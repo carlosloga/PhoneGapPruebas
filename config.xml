@@ -25,7 +25,5 @@
   <feature name="http://api.phonegap.com/1.0/network"/>
   <feature name="http://api.phonegap.com/1.0/notification"/>
 
-  <gap:plugin name="ChildBrowser" version="~3" />
-  <gap:plugin name="InAppBrowser" value="org.apache.cordova.InAppBrowser" />  
   <access origin="*" />  
 </widget>
