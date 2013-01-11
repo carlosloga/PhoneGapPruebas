@@ -143,8 +143,7 @@
                      break;
 
                  case "PDF":
-                     window.plugins.childBrowser.openExternal(filePath);
-                     //$('#visorPDF').attr("src", filePath); 
+                     $('#visorPDF').attr("src", filePath); 
                      //$('#visorPDF').contents().find('html').html(filePath);
                      break;
              }
@@ -173,7 +172,7 @@
 
          function childBexternal() {
              //window.plugins.childBrowser.openExternal('http://www.google.com');
-             window.plugins.childBrowser.openExternal("http://www.google.com");
+             ChildBrowser.openExternal('http://www.google.com', false);
          }
 
          function loadURL() {
