@@ -17,9 +17,8 @@
 <!-- iOS  -->
     <!-- <script src="scripts/cordova.ios.js" type="text/javascript"></script> -->
 <!-- ANDROID -->
-    <script src="Scripts/cordova-2.3.0.js" type="text/javascript"></script> 
-
-    <script src="Scripts/childbrowser.js" type="text/javascript"></script> 
+    <script src="cordova-2.3.0.js" type="text/javascript"></script> 
+    <script src="childbrowser.js" type="text/javascript"></script> 
 
 </head>
 <body>
@@ -143,12 +142,14 @@
                      break;
 
                  case "PDF":
-                     $('#visorPDF').attr("src", filePath); 
+                     alert("window.plugins.childBrowser.openExternal(" + filePath + ");");
+                     window.plugins.childBrowser.openExternal(filePath);
+                     //$('#visorPDF').attr("src", filePath); 
                      //$('#visorPDF').contents().find('html').html(filePath);
                      break;
              }
 
-             navigator.app.loadUrl(filePath);
+             //navigator.app.loadUrl(filePath);
          }
 
          function openWindow() {
@@ -167,24 +168,27 @@
          }
 
          function childB() {
+             alert('window.plugins.childBrowser.showWebPage google');
              window.plugins.childBrowser.showWebPage('http://www.google.com',{ showLocationBar: true });
          }
 
          function childBexternal() {
              //window.plugins.childBrowser.openExternal('http://www.google.com');
-             ChildBrowser.openExternal('http://www.google.com', false);
+             alert('window.plugins.childBrowser.openExternal google');
+             window.plugins.childBrowser.openExternal("http://www.google.com");
          }
 
          function loadURL() {
              //navigator.app.loadUrl('http://www.google.com');
+             alert('gap.exec(null, null, ChildBrowser, openExternal, ...');
              gap.exec(null, null, "ChildBrowser", "openExternal", ['http://www.google.com', true]);
          }
 
-         function libPDF() {
+         function libPDF() {             
              $.mobile.changePage("verPdf.html", { transition: "slideup" });
          }
 
-         function libPDF2() {
+         function libPDF2() {         
              $.mobile.changePage("verPdf2.html", { transition: "slidedown" });
          }
 
