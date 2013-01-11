@@ -4,9 +4,6 @@
 	<description>ProvaPDF. TABLET</description>
 	<author href="http://www.SettingConsultoria.cat" email="">Setting consultoría en T.I.</author>
 
-  <gap:plugin name="ChildBrowser" version="~3" />
-  <access origin="*" />
-  
   <preference name="phonegap-version" value="2.2.0" />
   <preference name="fullscreen" value="true" />
   <preference name="orientation" value="default" />
@@ -26,5 +23,7 @@
   <feature name="http://api.phonegap.com/1.0/geolocation"/>
   <feature name="http://api.phonegap.com/1.0/media"/>
   <feature name="http://api.phonegap.com/1.0/network"/>
-  <feature name="http://api.phonegap.com/1.0/notification"/>  
+  <feature name="http://api.phonegap.com/1.0/notification"/>
+
+  <access origin="*" />  
 </widget>
